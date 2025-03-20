@@ -1,0 +1,5 @@
+<odoo>
+  <menuitem id="menu_form" name="Form" sequence="1" />
+  <menuitem id="menu_form_all_types" name="Form all types" parent="menu_form"
+    action="action_form_all_types" />
+</odoo>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <template id="create_form_template" name="Create From Form">
+      <t t-call="website.layout">
+        <div class="container">
+          <h2>Create Record</h2>
+          <form action="/submit_form_web" method="post" enctype="multipart/form-data">
+            <!-- incluir el token CSRF dentro del formulario para validar la autenticidad de las
+            solicitudes -->
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" name="name" class="form-control" required="required" />
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea name="description" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Integer Field</label>
+              <input type="number" name="integer_field" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Float Field</label>
+              <input type="number" step="any" name="float_field" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Boolean Field</label>
+              <input type="checkbox" name="boolean_field" />
+            </div>
+            <div class="form-group">
+              <label>Selection Field</label>
+              <select name="selection_field" class="form-control">
+                <option value="option_1">Option 1</option>
+                <option value="option_2">Option 2</option>
+                <option value="option_3">Option 3</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Date Field</label>
+              <input type="date" name="date_field" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Datetime Field</label>
+              <input type="datetime-local" name="datetime_field" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Many2one Field (Partner)</label>
+              <select name="many2one_field" class="form-control">
+                <option value="">Select</option>
+                <t t-foreach="partners" t-as="partner">
+                  <option t-att-value="partner.id">
+                    <t t-esc="partner.name" />
+                  </option>
+                </t>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Many2many Field (Partners)</label>
+              <select id="many2many_field" name="many2many_field" class="form-control"
+                multiple="multiple" required="required">
+                <t t-foreach="partners" t-as="partner">
+                  <option t-att-value="partner.id">
+                    <t t-esc="partner.name" />
+                  </option>
+                </t>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Binary Field (File Upload)</label>
+              <input type="file" name="binary_field" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </t>
+    </template>
+
+
+  </data>
+
+
+</odoo>
