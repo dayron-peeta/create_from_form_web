@@ -15,5 +15,9 @@ class CreateFromFormController(http.Controller):
     @http.route('/submit_form_web', type='http', auth='public', methods=['POST'], website=True)
     def submit_form_web(self, **post):
         model = request.env['model_all_types'].sudo()
-        model.create_from_web(request.httprequest.form)  # Pasamos el formulario completo al método del modelo
+        form_data = request.httprequest.form
+        files = request.httprequest.files
+
+        model.create_from_web(form_data, files)
+          
         return request.redirect('/create_from_web')
