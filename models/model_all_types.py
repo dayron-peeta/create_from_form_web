@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 from datetime import datetime
+import logging
+_logger = logging.getLogger(__name__)
 
 class ModelAllTypes(models.Model):
     _name = 'model_all_types'
@@ -23,7 +25,7 @@ class ModelAllTypes(models.Model):
     binary_field = fields.Binary(string='Binary Field')
     
     @api.model
-    def create_from_web(self, values):
+    def create_from_web(self, values, files):
         """ Crea un registro desde el formulario web """
         return self.create({
             'name': values.get('name'),
@@ -36,5 +38,5 @@ class ModelAllTypes(models.Model):
             'datetime_field': datetime.strptime(values['datetime_field'], '%Y-%m-%dT%H:%M') if values.get('datetime_field') else False,
             'many2one_field': int(values.get('many2one_field', 0)) if values.get('many2one_field') else False,
             'many2many_field': [(6, 0, [int(id) for id in values.getlist('many2many_field') if id])],
-            'binary_field': values.get('binary_field').read() if values.get('binary_field') else False
-        })
+            'binary_field': files.get('binary_field').read() if files.get('binary_field') else False
+    })
